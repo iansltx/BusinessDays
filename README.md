@@ -27,36 +27,46 @@ $ composer require iansltx/business-days
 
 ## Usage
 
-The library setup is a bit verbose at this point, since it has no predefined filters. This will change very soon.
+FastForwarder evaluates filter functions/methods/closures to see whether a given date should be classified as a business
+day or not. You can provide a closure directly, or use one of the convenience methods to compose a filter more quickly.
+
+The convenience methods simply wrap either functions from StaticFilter or create closures via FilterFactory. Either of
+these filter utility classes may be used standalone to filter DateTime objects.
+
+Note that filters requiring numeric input have internal checks that require an explicit int cast for all parameters.
+Also, while skipWhen filters are executed on-add to check argument and return types, non-closure arguments are allowed,
+so you can use object methods, utility functions or global functions can be used as filters in addition to closures.
+
+Let's see FastForwarder in action...
 
 ``` php
 
-// set up the calculator
+// set up the instance with a day count
 $ff = iansltx\BusinessDays\FastForwarder::createWithDays(10);
-$ff->skipWhenWeekend();
-$ff->skipWhen(function (\DateTimeInterface $dt) {
-    if ($dt->format('m') != 2) {
-        return false;
-    }
 
-    return $dt->format('w') == 1 && $dt->format('d') > 14 && $dt->format('d') <= 21;
-}, 'presidents_day');
-$ff->skipWhen(function (\DateTimeInterface $dt) {
-    if ($dt->format('m') != 11) {
-        return false;
-    }
-
-    return $dt->format('w') == 4 && $dt->format('d') > 21 && $dt->format('d') <= 28;
-}, 'thanksgiving');
-$ff->skipWhen(function (\DateTimeInterface $dt) {
+// add a closure-based filter
+$ff->skipWhen(function (\DateTimeInterface $dt) { //
     return $dt->format('m') == 12 && $dt->format('d') == 25;
 }, 'christmas');
+
+// convenience method; saved to filter slot 'weekend'
+$ff->skipWhenWeekend();
+
+// overwrites 'weekend' slot with an identical call
+$ff->skipWhen(['iansltx\BusinessDays\StaticFilter', 'isWeekend'], 'weekend');
+
+// use some other convenience methods, this time pulling from FilterFactory
+$ff->skipWhenNthDayOfWeekOfMonth(3, 1, 2, 'presidents_day'); // third Monday of February
+$ff->skipWhenNthDayOfWeekOfMonth(4, 4, 11, 'thanksgiving'); // fourth Thursday of November
+$ff->skipWhenMonthAndDay(1, 1); // auto-named to md_1_1 since a filter name wasn't provided
 
 // calculate some dates
 echo $ff->exec(new \DateTime('2015-11-20 09:00:00'))->format('Y-m-d H:i:s'); // 2015-12-07 09:00:00
 echo $ff->exec(new \DateTimeImmutable('2015-02-12 09:00:00'))->format('Y-m-d H:i:s'); // 2015-02-27 09:00:00
 
 ```
+
+For more information on filter arguments etc., take a look at the source. All methods and classes have docblocks.
 
 ## Testing
 
@@ -66,7 +76,7 @@ $ composer test
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+Please see [CONTRIBUTING](CONTRIBUTING.md) for details. Additional static filters/filter factories are welcome!
 
 ## Security
 

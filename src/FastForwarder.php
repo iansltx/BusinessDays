@@ -61,9 +61,39 @@ class FastForwarder
      * @return $this
      */
     public function skipWhenWeekend() {
-        $this->skipWhen['weekend'] = function (\DateTimeInterface $dt) {
-            return in_array($dt->format('w'), [0, 6]);
-        };
+        $this->skipWhen['weekend'] = [StaticFilter::class, 'isWeekend'];
+        return $this;
+    }
+
+    /**
+     * Convenience method for adding a filter that marks a certain day/month as
+     * a non-business day.
+     *
+     * @param int $month
+     * @param int $day
+     * @param null|string $name optional filter name rather than default of md_$month_$day
+     * @return $this
+     */
+    public function skipWhenMonthAndDay($month, $day, $name = null) {
+        $this->skipWhen[$name ?: 'md_' . $month . '_' . $day] =
+                FilterFactory::monthAndDay($month, $day);
+        return $this;
+    }
+
+    /**
+     * Convenience method for adding a filter that marks the Nth (e.g. 4th) weekday
+     * (e.g. Thursday, as an integer e.g. 4) of a given month (as an integer) as
+     * a non-business day.
+     *
+     * @param int $n
+     * @param int $day_of_week
+     * @param int $month
+     * @param null|string $name optional filter name rather than default of ndm_$n_$day_of_week_$month
+     * @return $this
+     */
+    public function skipWhenNthDayOfWeekOfMonth($n, $day_of_week, $month, $name = null) {
+        $this->skipWhen[$name ?: 'ndm_' . $n . '_' . $day_of_week . '_' . $month] =
+                FilterFactory::nthDayOfWeekOfMonth($n, $day_of_week, $month);
         return $this;
     }
 

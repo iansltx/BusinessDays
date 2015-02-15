@@ -6,6 +6,7 @@ use iansltx\BusinessDays\FastForwarder;
 use \DateTimeImmutable as Immutable;
 use \DateTime as Mutable;
 use \DateInterval as Interval;
+use iansltx\BusinessDays\StaticFilter;
 
 class FastForwarderTest extends \PHPUnit_Framework_TestCase
 {
@@ -49,23 +50,13 @@ class FastForwarderTest extends \PHPUnit_Framework_TestCase
     protected function addFilterSet1(FastForwarder $ff)
     {
         $ff->skipWhenWeekend();
-        $ff->skipWhen(function (\DateTimeInterface $dt) {
-            if ($dt->format('m') != 2) {
-                return false;
-            }
-
-            return $dt->format('w') == 1 && $dt->format('d') > 14 && $dt->format('d') <= 21;
-        }, 'presidents_day');
-        $ff->skipWhen(function (\DateTimeInterface $dt) {
-            if ($dt->format('m') != 11) {
-                return false;
-            }
-
-            return $dt->format('w') == 4 && $dt->format('d') > 21 && $dt->format('d') <= 28;
-        }, 'thanksgiving');
-        $ff->skipWhen(function (\DateTimeInterface $dt) {
+        $ff->skipWhen([StaticFilter::class, 'isWeekend'], 'weekend'); // overwrites convenience method above
+        $ff->skipWhenNthDayOfWeekOfMonth(3, 1, 2, 'presidents_day');
+        $ff->skipWhenNthDayOfWeekOfMonth(4, 4, 11, 'thanksgiving');
+        $ff->skipWhen(function (\DateTimeInterface $dt) { // test providing a callable directly
             return $dt->format('m') == 12 && $dt->format('d') == 25;
         }, 'christmas');
+        $ff->skipWhenMonthAndDay(1, 1); // test auto-naming
 
         return $ff;
     }
