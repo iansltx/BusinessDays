@@ -1,7 +1,7 @@
 # BusinessDays
 
 [![Latest Version](https://img.shields.io/github/release/iansltx/BusinessDays.svg?style=flat-square)](https://github.com/iansltx/BusinessDays/releases)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
+[![Software License](https://img.shields.io/badge/license-BSD-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Build Status](https://img.shields.io/travis/iansltx/BusinessDays/master.svg?style=flat-square)](https://travis-ci.org/iansltx/BusinessDays)
 [![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/iansltx/BusinessDays.svg?style=flat-square)](https://scrutinizer-ci.com/g/iansltx/BusinessDays/code-structure)
 [![Quality Score](https://img.shields.io/scrutinizer/g/iansltx/BusinessDays.svg?style=flat-square)](https://scrutinizer-ci.com/g/iansltx/BusinessDays)
