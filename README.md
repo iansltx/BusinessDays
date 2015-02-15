@@ -33,9 +33,7 @@ The library setup is a bit verbose at this point, since it has no predefined fil
 
 // set up the calculator
 $ff = iansltx\BusinessDays\FastForwarder::createWithDays(10);
-$ff->skipWhen(function (\DateTimeInterface $dt) {
-    return in_array($dt->format('w'), [0, 6]);
-}, 'weekend');
+$ff->skipWhenWeekend();
 $ff->skipWhen(function (\DateTimeInterface $dt) {
     if ($dt->format('m') != 2) {
         return false;
