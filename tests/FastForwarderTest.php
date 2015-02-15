@@ -1,0 +1,74 @@
+<?php
+
+namespace iansltx\BusinessDays\Test;
+
+use iansltx\BusinessDays\FastForwarder;
+use \DateTimeImmutable as Immutable;
+use \DateTime as Mutable;
+use \DateInterval as Interval;
+
+class FastForwarderTest extends \PHPUnit_Framework_TestCase
+{
+    public function testTimeZoneSafety()
+    {
+        $ff = FastForwarder::createWithDays(10);
+        $startDt = new Immutable();
+        $expectedDt = $startDt->add(new Interval('P10D'));
+
+        $this->assertEquals($expectedDt, $ff->exec($startDt));
+    }
+
+    public function testFebruary()
+    {
+        $ff = $this->addFilterSet1(FastForwarder::createWithDays(10));
+
+        $endDt = $ff->exec(new Immutable('2015-02-12 09:00:00'));
+
+        $this->assertEquals('2015-02-27 09:00:00', $endDt->format('Y-m-d H:i:s'));
+        $this->assertInstanceOf('\DateTimeImmutable', $endDt);
+    }
+
+    public function testNovember()
+    {
+        $ff = $this->addFilterSet1(FastForwarder::createWithDays(10));
+
+        $endDt = $ff->exec(new Mutable('2015-11-20 09:00:00'));
+
+        $this->assertEquals('2015-12-07 09:00:00', $endDt->format('Y-m-d H:i:s'));
+        $this->assertInstanceOf('\DateTime', $endDt);
+    }
+
+    public function testSkipWhenException()
+    {
+        $ff = FastForwarder::createWithDays(1);
+
+        $this->setExpectedException('InvalidArgumentException');
+        $ff->skipWhen(function (\DateTimeInterface $dt) {return 0;}, 'strict_typehints_ftw');
+    }
+
+    protected function addFilterSet1(FastForwarder $ff)
+    {
+        $ff->skipWhen(function (\DateTimeInterface $dt) {
+            return in_array($dt->format('w'), [0, 6]);
+        }, 'weekend');
+        $ff->skipWhen(function (\DateTimeInterface $dt) {
+            if ($dt->format('m') != 2) {
+                return false;
+            }
+
+            return $dt->format('w') == 1 && $dt->format('d') > 14 && $dt->format('d') <= 21;
+        }, 'presidents_day');
+        $ff->skipWhen(function (\DateTimeInterface $dt) {
+            if ($dt->format('m') != 11) {
+                return false;
+            }
+
+            return $dt->format('w') == 4 && $dt->format('d') > 21 && $dt->format('d') <= 28;
+        }, 'thanksgiving');
+        $ff->skipWhen(function (\DateTimeInterface $dt) {
+            return $dt->format('m') == 12 && $dt->format('d') == 25;
+        }, 'christmas');
+
+        return $ff;
+    }
+}

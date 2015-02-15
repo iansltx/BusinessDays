@@ -1,0 +1,42 @@
+{
+    "name": "iansltx/business-days",
+    "description": "A way to calculate date periods based on the concept of business days rather than calendar days",
+    "keywords": [
+        "business-days"
+    ],
+    "homepage": "https://github.com/iansltx/BusinessDays",
+    "license": "BSD-2-Clause",
+    "authors": [
+        {
+            "name": "Ian Littman",
+            "email": "iansltx@gmail.com",
+            "homepage": "http://yanntx.info",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php" : ">=5.5.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit" : "4.*",
+        "scrutinizer/ocular": "~1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "iansltx\\BusinessDays\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "iansltx\\BusinessDays\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "./vendor/bin/phpunit"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
