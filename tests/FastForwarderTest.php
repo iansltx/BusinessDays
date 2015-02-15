@@ -48,9 +48,7 @@ class FastForwarderTest extends \PHPUnit_Framework_TestCase
 
     protected function addFilterSet1(FastForwarder $ff)
     {
-        $ff->skipWhen(function (\DateTimeInterface $dt) {
-            return in_array($dt->format('w'), [0, 6]);
-        }, 'weekend');
+        $ff->skipWhenWeekend();
         $ff->skipWhen(function (\DateTimeInterface $dt) {
             if ($dt->format('m') != 2) {
                 return false;

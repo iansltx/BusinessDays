@@ -55,6 +55,19 @@ class FastForwarder
     }
 
     /**
+     * Convenience method for adding a filter that marks Saturday and Sunday as
+     * non-business days.
+     *
+     * @return $this
+     */
+    public function skipWhenWeekend() {
+        $this->skipWhen['weekend'] = function (\DateTimeInterface $dt) {
+            return in_array($dt->format('w'), [0, 6]);
+        };
+        return $this;
+    }
+
+    /**
      * Calculates a date X days after $start_date, where X was supplied in
      * static::createWithDays(); if the end date would land on a non-business
      * day, the first business day after that date is returned.
