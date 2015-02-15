@@ -9,12 +9,13 @@ use \InvalidArgumentException;
 use \DateInterval;
 
 /**
+ * Class FastForwarder
+ *
  * Provides an easy way to calculate dates that are a specified number of
  * "business bays" in the future relative to a supplied date. This is achieved
  * by first adding a series of filter callbacks that define what is NOT a
  * business day.
  *
- * Class FastForwarder
  * @package iansltx\BusinessDays
  */
 class FastForwarder

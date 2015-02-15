@@ -1,8 +1,9 @@
 # Changelog
 
-All Notable changes to `iansltx\Holidays` will be documented in this file
+All Notable changes to `iansltx\BusinessDays` will be documented in this file
 
 ## NEXT
 
-### Added
-- Initial Release
+## 1.0.0 (2015-02-15)
+
+Initial release, with FastForwarder plus a few FilterFactory and StaticFilter methods
