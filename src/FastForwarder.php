@@ -34,9 +34,9 @@ class FastForwarder
      */
     public static function createWithDays($num_days)
     {
-        $ff = new static;
-        $ff->numDays = $num_days;
-        return $ff;
+        $fastForwarder = new static;
+        $fastForwarder->numDays = $num_days;
+        return $fastForwarder;
     }
 
     /**
