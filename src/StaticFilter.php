@@ -17,7 +17,8 @@ class StaticFilter
      * @param \DateTimeInterface $dt
      * @return bool
      */
-    public static function isWeekend(\DateTimeInterface $dt) {
+    public static function isWeekend(\DateTimeInterface $dt)
+    {
         return in_array($dt->format('w'), [0, 6]);
     }
 }

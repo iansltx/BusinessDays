@@ -36,7 +36,8 @@ class FilterFactory
      * @param $month
      * @param $day
      */
-    protected static function checkMonthAndDayArgs($month, $day) {
+    protected static function checkMonthAndDayArgs($month, $day)
+    {
         if (!is_int($month) || !is_int($day)) {
             throw new \InvalidArgumentException('$month and $day must be integers');
         }
@@ -65,7 +66,8 @@ class FilterFactory
      * @return callable
      * @throws \OutOfBoundsException|\InvalidArgumentException
      */
-    public static function nthDayOfWeekOfMonth($n, $day_of_week, $month) {
+    public static function nthDayOfWeekOfMonth($n, $day_of_week, $month)
+    {
         static::checkNthDayArgs($n, $day_of_week, $month);
 
         $lowerBound = ($n - 1) * 7;
@@ -88,7 +90,8 @@ class FilterFactory
      * @param $day_of_week
      * @param $month
      */
-    protected static function checkNthDayArgs($n, $day_of_week, $month) {
+    protected static function checkNthDayArgs($n, $day_of_week, $month)
+    {
         if (!is_int($n) || !is_int($day_of_week) || !is_int($month)) {
             throw new \InvalidArgumentException('$n, $day_of_week and $month must be integers');
         }

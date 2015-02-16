@@ -23,7 +23,9 @@ class FastForwarder
     protected $skipWhen = [];
     protected $numDays = 0;
 
-    protected function __construct() {}
+    protected function __construct()
+    {
+    }
 
     /**
      * Creates a FastForwarder with a defined number of business days
@@ -61,7 +63,8 @@ class FastForwarder
      *
      * @return $this
      */
-    public function skipWhenWeekend() {
+    public function skipWhenWeekend()
+    {
         $this->skipWhen['weekend'] = [StaticFilter::class, 'isWeekend'];
         return $this;
     }
@@ -75,7 +78,8 @@ class FastForwarder
      * @param null|string $name optional filter name rather than default of md_$month_$day
      * @return $this
      */
-    public function skipWhenMonthAndDay($month, $day, $name = null) {
+    public function skipWhenMonthAndDay($month, $day, $name = null)
+    {
         $this->skipWhen[$name ?: 'md_' . $month . '_' . $day] =
                 FilterFactory::monthAndDay($month, $day);
         return $this;
@@ -92,7 +96,8 @@ class FastForwarder
      * @param null|string $name optional filter name rather than default of ndm_$n_$day_of_week_$month
      * @return $this
      */
-    public function skipWhenNthDayOfWeekOfMonth($n, $day_of_week, $month, $name = null) {
+    public function skipWhenNthDayOfWeekOfMonth($n, $day_of_week, $month, $name = null)
+    {
         $this->skipWhen[$name ?: 'ndm_' . $n . '_' . $day_of_week . '_' . $month] =
                 FilterFactory::nthDayOfWeekOfMonth($n, $day_of_week, $month);
         return $this;
