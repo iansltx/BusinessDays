@@ -1,8 +1,10 @@
 # BusinessDays
 
+[![Author](http://img.shields.io/badge/author-@iansltx-blue.svg?style=flat-square)](https://twitter.com/iansltx)
 [![Latest Version](https://img.shields.io/github/release/iansltx/BusinessDays.svg?style=flat-square)](https://github.com/iansltx/BusinessDays/releases)
 [![Software License](https://img.shields.io/badge/license-BSD-brightgreen.svg?style=flat-square)](LICENSE.md)
 [![Build Status](https://img.shields.io/travis/iansltx/BusinessDays/master.svg?style=flat-square)](https://travis-ci.org/iansltx/BusinessDays)
+[![HHVM Status](https://img.shields.io/hhvm/iansltx/business-days.svg?style=flat-square)](http://hhvm.h4cc.de/package/iansltx/business-days)
 [![Coverage Status](https://img.shields.io/scrutinizer/coverage/g/iansltx/BusinessDays.svg?style=flat-square)](https://scrutinizer-ci.com/g/iansltx/BusinessDays/code-structure)
 [![Quality Score](https://img.shields.io/scrutinizer/g/iansltx/BusinessDays.svg?style=flat-square)](https://scrutinizer-ci.com/g/iansltx/BusinessDays)
 [![Code Climate](https://codeclimate.com/github/iansltx/BusinessDays/badges/gpa.svg)](https://codeclimate.com/github/iansltx/BusinessDays)
