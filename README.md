@@ -28,6 +28,9 @@ Via Composer
 $ composer require iansltx/business-days
 ```
 
+If you don't want Composer, you may download the source zipball directly from GitHub and load it using a PSR-4 compliant
+autoloader. If you don't have such an autoloader, require `autoload.php` to get one that works for this library.
+
 ## Usage
 
 FastForwarder evaluates filter functions/methods/closures to see whether a given date should be classified as a business
@@ -58,10 +61,10 @@ $ff->skipWhenWeekend();
 // overwrites 'weekend' slot with an identical call
 $ff->skipWhen(['iansltx\BusinessDays\StaticFilter', 'isWeekend'], 'weekend');
 
-// use some other convenience methods, this time pulling from FilterFactory
-$ff->skipWhenNthDayOfWeekOfMonth(3, 1, 2, 'presidents_day'); // third Monday of February
-$ff->skipWhenNthDayOfWeekOfMonth(4, 4, 11, 'thanksgiving'); // fourth Thursday of November
-$ff->skipWhenMonthAndDay(1, 1); // auto-named to md_1_1 since a filter name wasn't provided
+// use some other convenience methods, this time pulling from FilterFactory and using method chaining
+$ff->skipWhenNthDayOfWeekOfMonth(3, 1, 2, 'presidents_day') // third Monday of February
+   ->skipWhenNthDayOfWeekOfMonth(4, 4, 11, 'thanksgiving') // fourth Thursday of November
+   ->skipWhenMonthAndDay(1, 1); // auto-named to md_1_1 since a filter name wasn't provided
 
 // calculate some dates
 echo $ff->exec(new \DateTime('2015-11-20 09:00:00'))->format('Y-m-d H:i:s'); // 2015-12-07 09:00:00
@@ -76,6 +79,10 @@ For more information on filter arguments etc., take a look at the source. All me
 ``` bash
 $ composer test
 ```
+
+`humbug.json` is included if you want to do mutation testing with [Humbug](https://github.com/padraic/humbug).
+Currently, not all mutations are caught; PRs are welcome to help rectify this issue. `composer test` only runs PHPUnit
+tests.
 
 ## Contributing
 
