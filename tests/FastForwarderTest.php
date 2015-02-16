@@ -3,9 +3,9 @@
 namespace iansltx\BusinessDays\Test;
 
 use iansltx\BusinessDays\FastForwarder;
-use \DateTimeImmutable as Immutable;
-use \DateTime as Mutable;
-use \DateInterval as Interval;
+use DateTimeImmutable as Immutable;
+use DateTime as Mutable;
+use DateInterval as Interval;
 use iansltx\BusinessDays\StaticFilter;
 
 class FastForwarderTest extends \PHPUnit_Framework_TestCase
