@@ -49,15 +49,13 @@ class FastForwarderTest extends \PHPUnit_Framework_TestCase
 
     protected function addFilterSet1(FastForwarder $ff)
     {
-        $ff->skipWhenWeekend();
-        $ff->skipWhen([StaticFilter::class, 'isWeekend'], 'weekend'); // overwrites convenience method above
-        $ff->skipWhenNthDayOfWeekOfMonth(3, 1, 2, 'presidents_day');
-        $ff->skipWhenNthDayOfWeekOfMonth(4, 4, 11, 'thanksgiving');
-        $ff->skipWhen(function (\DateTimeInterface $dt) { // test providing a callable directly
+        return $ff->skipWhenWeekend()
+            ->skipWhen([StaticFilter::class, 'isWeekend'], 'weekend') // overwrites convenience method above
+            ->skipWhenNthDayOfWeekOfMonth(3, 1, 2, 'presidents_day')
+            ->skipWhenNthDayOfWeekOfMonth(4, 4, 11, 'thanksgiving')
+            ->skipWhenMonthAndDay(1, 1) // test auto-naming
+            ->skipWhen(function (\DateTimeInterface $dt) { // test providing a callable directly
             return $dt->format('m') == 12 && $dt->format('d') == 25;
         }, 'christmas');
-        $ff->skipWhenMonthAndDay(1, 1); // test auto-naming
-
-        return $ff;
     }
 }
