@@ -2,8 +2,8 @@
 
 spl_autoload_register(function ($class) {
     $map = [
-        'iansltx\\BusinessDays\\Test\\' => __DIR__ . DIRECTORY_SEPARATOR . 'tests',
-        'iansltx\\BusinessDays\\' => __DIR__ . DIRECTORY_SEPARATOR . 'src'
+        'iansltx\\BusinessDays\\Test\\' => __DIR__ . DIRECTORY_SEPARATOR . 'tests' . DIRECTORY_SEPARATOR,
+        'iansltx\\BusinessDays\\' => __DIR__ . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR
     ];
 
     foreach ($map as $prefix => $baseDir) {
