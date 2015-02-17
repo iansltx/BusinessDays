@@ -2,8 +2,6 @@
 
 namespace iansltx\BusinessDays;
 
-use DateTime;
-use DateTimeImmutable;
 use DateTimeInterface;
 use DateInterval;
 
@@ -17,14 +15,8 @@ use DateInterval;
  *
  * @package iansltx\BusinessDays
  */
-class FastForwarder
+class FastForwarder extends PeriodIterator
 {
-    use SkipWhenTrait;
-
-    protected function __construct()
-    {
-    }
-
     /**
      * Calculates a date X days after $start_date, where X was supplied in
      * static::createWithDays(); if the end date would land on a non-business
@@ -35,28 +27,6 @@ class FastForwarder
      */
     public function exec(DateTimeInterface $start_date)
     {
-        $startTz = $start_date->getTimezone();
-        $newDt = (new DateTime($start_date->format('c')))->setTimeZone($startTz);
-
-        $daysLeft = $this->numDays;
-        $dateInterval = new DateInterval('P1D');
-
-        while ($daysLeft > 0) {
-            if ($this->getSkippedBy($newDt) === false) {
-                --$daysLeft;
-            }
-
-            $newDt->add($dateInterval);
-        }
-
-        do { // if end date falls on a skipped day, keep skipping until a valid day is found
-            $skipFilterName = $this->getSkippedBy($newDt);
-            if ($skipFilterName !== false) {
-                $newDt->add($dateInterval);
-            }
-        } while ($skipFilterName !== false);
-
-        return $start_date instanceof DateTime ? $newDt->setTimezone($startTz) :
-                new DateTimeImmutable($newDt->format('Y-m-d H:i:s'), $startTz);
+        return $this->iterate($start_date, new DateInterval('P1D'), false);
     }
 }

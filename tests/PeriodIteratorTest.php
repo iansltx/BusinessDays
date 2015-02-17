@@ -6,9 +6,10 @@ use iansltx\BusinessDays\FastForwarder;
 use DateTimeImmutable as Immutable;
 use DateTime as Mutable;
 use DateInterval as Interval;
+use iansltx\BusinessDays\PeriodIterator;
 use iansltx\BusinessDays\StaticFilter;
 
-class FastForwarderTest extends \PHPUnit_Framework_TestCase
+class PeriodIteratorTest extends \PHPUnit_Framework_TestCase
 {
     public function testTimeZoneSafety()
     {
@@ -19,7 +20,7 @@ class FastForwarderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedDt, $ff->exec($startDt));
     }
 
-    public function testFebruary()
+    public function testFastForwardFebruary()
     {
         $ff = $this->addFilterSet1(FastForwarder::createWithDays(10));
 
@@ -29,7 +30,7 @@ class FastForwarderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\DateTimeImmutable', $endDt);
     }
 
-    public function testNovember()
+    public function testFastForwardNovember()
     {
         $ff = $this->addFilterSet1(FastForwarder::createWithDays(10));
 
@@ -65,7 +66,7 @@ class FastForwarderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\DateTime', $endDt);
     }
 
-    protected function addFilterSet1(FastForwarder $ff)
+    protected function addFilterSet1(PeriodIterator $ff)
     {
         return $ff->skipWhenWeekend()
             ->skipWhen([StaticFilter::class, 'isWeekend'], 'weekend') // overwrites convenience method above
