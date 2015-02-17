@@ -64,7 +64,8 @@ $ff->skipWhen(['iansltx\BusinessDays\StaticFilter', 'isWeekend'], 'weekend');
 // use some other convenience methods, this time pulling from FilterFactory and using method chaining
 $ff->skipWhenNthDayOfWeekOfMonth(3, 1, 2, 'presidents_day') // third Monday of February
    ->skipWhenNthDayOfWeekOfMonth(4, 4, 11, 'thanksgiving') // fourth Thursday of November
-   ->skipWhenMonthAndDay(1, 1); // auto-named to md_1_1 since a filter name wasn't provided
+   ->skipWhenMonthAndDay(1, 1) // auto-named to md_1_1 since a filter name wasn't provided
+   ->skipWhen(['iansltx\BusinessDays\StaticFilter', 'isEasterMonday'], 'easter_monday');
 
 // calculate some dates
 echo $ff->exec(new \DateTime('2015-11-20 09:00:00'))->format('Y-m-d H:i:s'); // 2015-12-07 09:00:00
@@ -72,7 +73,9 @@ echo $ff->exec(new \DateTimeImmutable('2015-02-12 09:00:00'))->format('Y-m-d H:i
 
 ```
 
-For more information on filter arguments etc., take a look at the source. All methods and classes have docblocks.
+For more information on filter arguments etc., take a look at the source. All methods and classes have docblocks. The
+callable-based syntax of skipWhen() allows for arbitrarily complex definitions of whether a date should be skipped, as
+can be seen in more complex filters like isEasterMonday.
 
 ## Testing
 

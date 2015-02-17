@@ -100,4 +100,24 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         $isThanksgiving = FilterFactory::nthDayOfWeekOfMonth(4, 4, 11);
         $this->assertTrue($isThanksgiving(new \DateTime('November 26 2015')));
     }
+
+    public function testEasterMondayWrongYear()
+    {
+        $this->assertFalse(StaticFilter::isEasterMonday(new \DateTime('April 6 2014')));
+    }
+
+    public function testEasterMondayWrongMonth()
+    {
+        $this->assertFalse(StaticFilter::isEasterMonday(new \DateTime('March 6 2015')));
+    }
+
+    public function testEasterMondayWrongDay()
+    {
+        $this->assertFalse(StaticFilter::isEasterMonday(new \DateTime('April 5 2015')));
+    }
+
+    public function testEasterMondayMatch()
+    {
+        $this->assertTrue(StaticFilter::isEasterMonday(new \DateTime('April 6 2015 23:59:59')));
+    }
 }

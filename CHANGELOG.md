@@ -2,7 +2,10 @@
 
 All Notable changes to `iansltx\BusinessDays` will be documented in this file
 
-## NEXT
+## 1.1.0 (2015-02-16)
+
+- Added standalone autoloader
+- Added isEasterMonday static filter
 
 ## 1.0.0 (2015-02-15)
 
