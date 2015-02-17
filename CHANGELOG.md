@@ -5,7 +5,7 @@ All Notable changes to `iansltx\BusinessDays` will be documented in this file
 ## 1.2.0 (2015-02-16)
 
 - Added isGoodFriday static filter
-- Fixed #1 (Easter calculation fails on HHVM) by implementing Easter calc in PHP
+- Fixed #3 (Easter calculation fails on HHVM) by implementing Easter calc in PHP
   (StaticFilter::getEasterDateTimeForYear, which returns a DateTimeImmutable)
 
 ## 1.1.0 (2015-02-16)
