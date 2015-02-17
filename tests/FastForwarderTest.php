@@ -47,6 +47,24 @@ class FastForwarderTest extends \PHPUnit_Framework_TestCase
         $ff->skipWhen(function (\DateTimeInterface $dt) {return 0;}, 'strict_typehints_ftw');
     }
 
+    public function testFilterImportExport()
+    {
+        $ff = $this->addFilterSet1(FastForwarder::createWithDays(10));
+        $filters = $ff->getSkipWhenFilters();
+
+        $this->assertCount(7, $filters); // takes into account weekend being overwritten
+        $this->assertArrayHasKey('md_1_1', $filters); // automated filter name generation
+        $this->assertArrayHasKey('christmas', $filters); // manual filter name generation
+        $this->assertArrayNotHasKey(0, $filters); // not a numerically indexed array
+
+        $ff2 = FastForwarder::createWithDays(10, $filters);
+
+        $endDt = $ff2->exec(new Mutable('2015-11-20 09:00:00'));
+
+        $this->assertEquals('2015-12-07 09:00:00', $endDt->format('Y-m-d H:i:s'));
+        $this->assertInstanceOf('\DateTime', $endDt);
+    }
+
     protected function addFilterSet1(FastForwarder $ff)
     {
         return $ff->skipWhenWeekend()

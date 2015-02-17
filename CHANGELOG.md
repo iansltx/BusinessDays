@@ -2,6 +2,10 @@
 
 All Notable changes to `iansltx\BusinessDays` will be documented in this file
 
+## NEXT
+
+- Added bulk filter import/export to FastForwarder
+
 ## 1.2.0 (2015-02-16)
 
 - Added isGoodFriday static filter

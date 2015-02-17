@@ -32,13 +32,16 @@ class FastForwarder
      *
      * @param int $num_days the number of business days from the supplied date to
      *  the end date
+     * @param array $skip_when pre-defined filters to add to skipWhen without testing
      * @return static
      */
-    public static function createWithDays($num_days)
+    public static function createWithDays($num_days, array $skip_when = [])
     {
-        $fastForwarder = new static;
-        $fastForwarder->numDays = $num_days;
-        return $fastForwarder;
+        $class = new static;
+        $class->numDays = $num_days;
+        $class->skipWhen = $skip_when;
+
+        return $class;
     }
 
     /**
@@ -101,6 +104,15 @@ class FastForwarder
         $this->skipWhen[$name ?: 'ndm_' . $n . '_' . $day_of_week . '_' . $month] =
                 FilterFactory::nthDayOfWeekOfMonth($n, $day_of_week, $month);
         return $this;
+    }
+
+    /**
+     * Returns an associative array of filters added via skipWhen()
+     *
+     * @return array
+     */
+    public function getSkipWhenFilters() {
+        return $this->skipWhen;
     }
 
     /**
