@@ -120,4 +120,24 @@ class FilterTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertTrue(StaticFilter::isEasterMonday(new \DateTime('April 6 2015 23:59:59')));
     }
+
+    public function testGoodFridayWrongYear()
+    {
+        $this->assertFalse(StaticFilter::isGoodFriday(new \DateTime('April 3 2014')));
+    }
+
+    public function testGoodFridayWrongMonth()
+    {
+        $this->assertFalse(StaticFilter::isGoodFriday(new \DateTime('March 3 2015')));
+    }
+
+    public function testGoodFridayWrongDay()
+    {
+        $this->assertFalse(StaticFilter::isGoodFriday(new \DateTime('April 4 2015')));
+    }
+
+    public function testGoodFridayMatch()
+    {
+        $this->assertTrue(StaticFilter::isGoodFriday(new \DateTime('April 3 2015 23:59:59')));
+    }
 }

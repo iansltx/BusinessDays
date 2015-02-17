@@ -65,6 +65,7 @@ $ff->skipWhen(['iansltx\BusinessDays\StaticFilter', 'isWeekend'], 'weekend');
 $ff->skipWhenNthDayOfWeekOfMonth(3, 1, 2, 'presidents_day') // third Monday of February
    ->skipWhenNthDayOfWeekOfMonth(4, 4, 11, 'thanksgiving') // fourth Thursday of November
    ->skipWhenMonthAndDay(1, 1) // auto-named to md_1_1 since a filter name wasn't provided
+   ->skipWhen(['iansltx\BusinessDays\StaticFilter', 'isGoodFriday'], 'good_friday')
    ->skipWhen(['iansltx\BusinessDays\StaticFilter', 'isEasterMonday'], 'easter_monday');
 
 // calculate some dates
