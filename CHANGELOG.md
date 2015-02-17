@@ -5,6 +5,7 @@ All Notable changes to `iansltx\BusinessDays` will be documented in this file
 ## NEXT
 
 - Added bulk filter import/export to FastForwarder
+- Moved non-algorithmic functionality into SkipWhenTrait for use by future classes
 
 ## 1.2.0 (2015-02-16)
 
