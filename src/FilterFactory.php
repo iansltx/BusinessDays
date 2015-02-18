@@ -60,31 +60,6 @@ class FilterFactory
     }
 
     /**
-     * Does type and bounds checks for monthAndDay()
-     *
-     * @param $month
-     * @param $day
-     */
-    protected static function checkMonthAndDayArgs($month, $day)
-    {
-        if (!is_int($month) || !is_int($day)) {
-            throw new \InvalidArgumentException('$month and $day must be integers');
-        }
-
-        if ($month < 1 || $month > 12) {
-            throw new \OutOfBoundsException('$month must be 1-12');
-        }
-
-        if ($day < 1 || $day > 31) {
-            throw new \OutOfBoundsException('$day must be a valid day of the month');
-        }
-
-        if ((in_array($month, [4, 6, 9, 11]) && $day > 30) || ((int) $month === 2 && $day > 29)) {
-            throw new \OutOfBoundsException('Day ' . $day . ' does not exist in month ' . $month);
-        }
-    }
-
-    /**
      * Returns a filter that returns true if the date is the Nth (e.g. 4rd)
      * day (e.g. Thursday, as an integer where Sunday is 0 and Saturday is 6)
      * of a given month (as an integer where January is 1 and December is 12)
@@ -135,6 +110,31 @@ class FilterFactory
 
         if ($month < 1 || $month > 12) {
             throw new \OutOfBoundsException('$month must be 1-12');
+        }
+    }
+
+    /**
+     * Does type and bounds checks for monthAndDay()
+     *
+     * @param $month
+     * @param $day
+     */
+    protected static function checkMonthAndDayArgs($month, $day)
+    {
+        if (!is_int($month) || !is_int($day)) {
+            throw new \InvalidArgumentException('$month and $day must be integers');
+        }
+
+        if ($month < 1 || $month > 12) {
+            throw new \OutOfBoundsException('$month must be 1-12');
+        }
+
+        if ($day < 1 || $day > 31) {
+            throw new \OutOfBoundsException('$day must be a valid day of the month');
+        }
+
+        if ((in_array($month, [4, 6, 9, 11]) && $day > 30) || ((int) $month === 2 && $day > 29)) {
+            throw new \OutOfBoundsException('Day ' . $day . ' does not exist in month ' . $month);
         }
     }
 }
