@@ -53,6 +53,60 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($isChristmas(new \DateTime('December 25')));
     }
 
+    public function testMonthDayDayOfWeekNonInteger()
+    {
+        $this->setExpectedException('\InvalidArgumentException');
+        FilterFactory::monthAndDayOnDayOfWeek(1, 1, '0');
+    }
+
+    public function testMonthDayDayOfWeekInvalidMonth()
+    {
+        $this->setExpectedException('\OutOfBoundsException');
+        FilterFactory::monthAndDayOnDayOfWeek(13, 1, 0);
+    }
+
+    public function testMonthDayDayOfWeekInvalidDay()
+    {
+        $this->setExpectedException('\OutOfBoundsException');
+        FilterFactory::monthAndDayOnDayOfWeek(12, 32, 0);
+    }
+
+    public function testMonthDayDayOfWeekInvalidDayForMonth()
+    {
+        $this->setExpectedException('\OutOfBoundsException');
+        FilterFactory::monthAndDayOnDayOfWeek(2, 30, 0);
+    }
+
+    public function testMonthDayDayOfWeekInvalidDayOfWeek()
+    {
+        $this->setExpectedException('\OutOfBoundsException');
+        FilterFactory::monthAndDayOnDayOfWeek(2, 28, 7);
+    }
+
+    public function testMonthDayDayOfWeekWrongDayOfWeek()
+    {
+        $isChristmas = FilterFactory::monthAndDayOnDayOfWeek(12, 26, 5);
+        $this->assertFalse($isChristmas(new \DateTime('December 26 2015')));
+    }
+
+    public function testMonthDayDayOfWeekWrongMonth()
+    {
+        $isChristmas = FilterFactory::monthAndDayOnDayOfWeek(12, 26, 5);
+        $this->assertFalse($isChristmas(new \DateTime('September 26 2014')));
+    }
+
+    public function testMonthDayDayOfWeekWrongDay()
+    {
+        $isChristmas = FilterFactory::monthAndDayOnDayOfWeek(12, 26, 5);
+        $this->assertFalse($isChristmas(new \DateTime('December 25 2015')));
+    }
+
+    public function testMonthDayDayOfWeekTrue()
+    {
+        $isChristmas = FilterFactory::monthAndDayOnDayOfWeek(12, 26, 5);
+        $this->assertTrue($isChristmas(new \DateTime('December 26 2014')));
+    }
+
     public function testNthDayOfWeekOfMonthNonInteger()
     {
         $this->setExpectedException('\InvalidArgumentException');

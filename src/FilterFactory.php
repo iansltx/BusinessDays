@@ -31,6 +31,35 @@ class FilterFactory
     }
 
     /**
+     * Returns a filter that returns true if the day, month and day of week
+     * match, false otherwise; the month and day of week are represented as
+     * integers (January is 1, December is 12, Sunday is 0, Saturday is 6)
+     *
+     * @param int $month
+     * @param int $day
+     * @param int $day_of_week
+     * @return callable
+     * @throws \OutOfBoundsException|\InvalidArgumentException
+     */
+    public static function monthAndDayOnDayOfWeek($month, $day, $day_of_week)
+    {
+        static::checkMonthAndDayArgs($month, $day);
+
+        if (!is_int($day_of_week)) {
+            throw new \InvalidArgumentException('$day_of_week must be an integer');
+        }
+
+        if ($day_of_week < 0 || $day_of_week > 6) {
+            throw new \OutOfBoundsException('$day_of_week must be 0-6');
+        }
+
+        return function(\DateTimeInterface $dt) use ($month, $day, $day_of_week) {
+            return (int) $dt->format('m') === $month && (int) $dt->format('d') === $day &&
+                    (int) $dt->format('w') === $day_of_week;
+        };
+    }
+
+    /**
      * Does type and bounds checks for monthAndDay()
      *
      * @param $month
