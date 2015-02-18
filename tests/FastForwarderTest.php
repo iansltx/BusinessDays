@@ -7,10 +7,9 @@ use iansltx\BusinessDays\Rewinder;
 use DateTimeImmutable as Immutable;
 use DateTime as Mutable;
 use DateInterval as Interval;
-use iansltx\BusinessDays\PeriodIterator;
 use iansltx\BusinessDays\StaticFilter;
 
-class PeriodIteratorTest extends \PHPUnit_Framework_TestCase
+class FastForwarderTest extends \PHPUnit_Framework_TestCase
 {
     public function testTimeZoneSafety()
     {
@@ -21,7 +20,7 @@ class PeriodIteratorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedDt, $ff->exec($startDt));
     }
 
-    public function testFastForwardFebruary()
+    public function testImmutable()
     {
         $ff = $this->addFilterSet1(FastForwarder::createWithDays(10));
 
@@ -31,14 +30,31 @@ class PeriodIteratorTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\DateTimeImmutable', $endDt);
     }
 
-    public function testFastForwardNovember()
+    public function testExtendedClass()
     {
         $ff = $this->addFilterSet1(FastForwarder::createWithDays(10));
 
-        $endDt = $ff->exec(new Mutable('2015-11-20 09:00:00'));
+        $extendedDt = new DateTimeExtended('2015-02-12 09:00:00');
+        $somethingElse = $extendedDt->getSomethingElse();
+
+        /** @var DateTimeExtended $endDt */
+        $endDt = $ff->exec($extendedDt);
+
+        $this->assertEquals('2015-02-27 09:00:00', $endDt->format('Y-m-d H:i:s'));
+        $this->assertInstanceOf(DateTimeExtended::class, $endDt);
+        $this->assertEquals($somethingElse, $endDt->getSomethingElse());
+    }
+
+    public function testMutable()
+    {
+        $ff = $this->addFilterSet1(FastForwarder::createWithDays(10));
+
+        $startDt = new Mutable('2015-11-20 09:00:00');
+        $endDt = $ff->exec($startDt);
 
         $this->assertEquals('2015-12-07 09:00:00', $endDt->format('Y-m-d H:i:s'));
         $this->assertInstanceOf('\DateTime', $endDt);
+        $this->assertEquals('2015-11-20 09:00:00', $startDt->format('Y-m-d H:i:s'));
     }
 
     public function testRewindOverWeekend()
@@ -76,7 +92,7 @@ class PeriodIteratorTest extends \PHPUnit_Framework_TestCase
         $ff = FastForwarder::createWithDays(1);
 
         $this->setExpectedException('InvalidArgumentException');
-        $ff->skipWhen(function (\DateTimeInterface $dt) {return 0;}, 'strict_typehints_ftw');
+        $ff->skipWhen(function (\DateTimeInterface $dt) {return $dt->format('m');}, 'strict_typehints_ftw');
     }
 
     public function testFilterImportExport()
@@ -97,7 +113,7 @@ class PeriodIteratorTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\DateTime', $endDt);
     }
 
-    protected function addFilterSet1(PeriodIterator $ff)
+    protected function addFilterSet1(FastForwarder $ff)
     {
         return $ff->skipWhenWeekend()
             ->skipWhen([StaticFilter::class, 'isWeekend'], 'weekend') // overwrites convenience method above

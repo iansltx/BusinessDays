@@ -2,9 +2,6 @@
 
 namespace iansltx\BusinessDays;
 
-use DateTimeInterface;
-use DateInterval;
-
 /**
  * Class Rewinder
  *
@@ -13,20 +10,17 @@ use DateInterval;
  * by first adding a series of filter callbacks that define what is NOT a
  * business day.
  *
+ * Calculates a date X days before $start_date, where X was supplied in
+ * static::createWithDays(); if the end date would land on a non-business
+ * day, the last business day before that date is returned.
+ *
  * @package iansltx\BusinessDays
  */
-class Rewinder extends PeriodIterator
+class Rewinder extends FastForwarder
 {
-    /**
-     * Calculates a date X days before $start_date, where X was supplied in
-     * static::createWithDays(); if the end date would land on a non-business
-     * day, the last business day before that date is returned.
-     *
-     * @param DateTimeInterface $start_date
-     * @return DateTimeInterface same type as $start_date
-     */
-    public function exec(DateTimeInterface $start_date)
+    protected function __construct()
     {
-        return $this->iterate($start_date, new DateInterval('P1D'), true);
+        parent::__construct();
+        $this->interval->invert = 1;
     }
 }

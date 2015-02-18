@@ -6,8 +6,8 @@ All Notable changes to `iansltx\BusinessDays` will be documented in this file
 
 - Added bulk filter import/export to FastForwarder
 - Added Rewinder for iterating backward from, rather than forward from, a given date
-- Moved non-algorithmic functionality into SkipWhenTrait for use by Rewinder etc.
-- Moved algorithmic functionality into PeriodIterator class for use by Rewinder etc.
+- Moved non-algorithmic functionality into SkipWhenTrait for use by other potential classes
+- Fixed exec() return type when argument subclasses \DateTime or \DateTimeImmutable
 
 ## 1.2.0 (2015-02-16)
 
