@@ -54,10 +54,10 @@ class FastForwarder
      */
     public function __construct($num_days, array $skip_when = [])
     {
-        $this->numDays = abs($num_days);
+        $this->numDays = ceil(abs($num_days));
         $this->interval = new DateInterval('P1D');
         // invert iterator direction if negative day count
-        $this->interval->invert = (int) ($this->numDays != $num_days);
+        $this->interval->invert = (int) ($num_days < 0);
         $this->replaceSkipWhen($skip_when);
     }
 
