@@ -5,7 +5,6 @@ namespace iansltx\BusinessDays;
 use DateTimeInterface;
 use DateTime;
 use DateInterval;
-use DateTimeImmutable;
 
 /**
  * Class FastForwarder
@@ -35,9 +34,9 @@ class FastForwarder
     protected $interval;
 
     /**
-     * Static factory method for backward compatibility
+     * Static factory method for backward compatibility; see constructor for more details
      *
-     * @param $num_days
+     * @param int|float $num_days
      * @param array $skip_when
      * @return static
      */
@@ -49,15 +48,16 @@ class FastForwarder
     /**
      * Creates an instance with a defined number of business days
      *
-     * @param int $num_days the number of business days from the supplied date to
-     *  the calculated date
+     * @param int|float $num_days the number of business days from the supplied date to
+     *  the calculated date (non-integer values will be rounded up)
      * @param array $skip_when pre-defined filters to add to skipWhen without testing
      */
     public function __construct($num_days, array $skip_when = [])
     {
         $this->numDays = abs($num_days);
         $this->interval = new DateInterval('P1D');
-        $this->interval->invert = ($this->numDays != $num_days); // invert iterator direction if negative day count
+        // invert iterator direction if negative day count
+        $this->interval->invert = (int) ($this->numDays != $num_days);
         $this->replaceSkipWhen($skip_when);
     }
 
@@ -92,7 +92,7 @@ class FastForwarder
             }
         } while ($skipFilterName !== false);
 
-        /** @var DateTime|DateTimeImmutable $clonedDt */
+        /** @var DateTime|\DateTimeImmutable $clonedDt */
         $clonedDt = clone $start_date;
         return $clonedDt->setTimestamp($newDt->getTimestamp());
     }
