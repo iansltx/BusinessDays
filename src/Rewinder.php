@@ -14,13 +14,16 @@ namespace iansltx\BusinessDays;
  * static::createWithDays(); if the end date would land on a non-business
  * day, the last business day before that date is returned.
  *
+ * A negative day count may be entered into the constructor to count in the
+ * opposite direction (days in the future vs. in the past). Or just use
+ * FastForwarder.
+ *
  * @package iansltx\BusinessDays
  */
 class Rewinder extends FastForwarder
 {
-    protected function __construct()
+    public function __construct($num_days, array $skip_when = [])
     {
-        parent::__construct();
-        $this->interval->invert = 1;
+        parent::__construct($num_days * -1, $skip_when);
     }
 }

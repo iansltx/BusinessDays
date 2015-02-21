@@ -2,6 +2,12 @@
 
 All Notable changes to `iansltx\BusinessDays` will be documented in this file
 
+## 1.4.0 (2015-02-21)
+
+- Added support for negative day input on-construct (FastForwarder(-2) == Rewinder(2))
+- Made constructor visibility public; supports same arguments as createWithDays(); useful for factories/DI containers
+- Moved createWithDays() static method out of SkipWhenTrait
+
 ## 1.3.0 (2015-02-18)
 
 - Added bulk filter import/export to FastForwarder

@@ -6,27 +6,19 @@ use DateTimeImmutable;
 use InvalidArgumentException;
 use DateTime;
 
+/**
+ * Trait SkipWhenTrait
+ *
+ * Use this trait to include filter storage and a few convenience methods in
+ * your date iteration classes. Includes a method to check whether, based on
+ * the filters currently added, a bay is a business day or not.
+ *
+ * @package iansltx\BusinessDays
+ */
 trait SkipWhenTrait
 {
     protected $skipWhen = [];
-    protected $numDays = 0;
-
-    /**
-     * Creates an instance with a defined number of business days
-     *
-     * @param int $num_days the number of business days from the supplied date to
-     *  the calculated date
-     * @param array $skip_when pre-defined filters to add to skipWhen without testing
-     * @return static
-     */
-    public static function createWithDays($num_days, array $skip_when = [])
-    {
-        $class = new static;
-        $class->numDays = $num_days;
-        $class->skipWhen = $skip_when;
-
-        return $class;
-    }
+    protected $isImported = false;
 
     /**
      * @param callable $filter takes a DateTimeInterface, returns true if that date
@@ -95,8 +87,21 @@ trait SkipWhenTrait
      *
      * @return array
      */
-    public function getSkipWhenFilters() {
+    public function getSkipWhenFilters()
+    {
         return $this->skipWhen;
+    }
+
+    /**
+     * Replace all skip-when filters with the supplied set
+     *
+     * @param array $filters
+     * @return $this
+     */
+    protected function replaceSkipWhen(array $filters = [])
+    {
+        $this->skipWhen = $filters;
+        return $this;
     }
 
     /**

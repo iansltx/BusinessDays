@@ -19,18 +19,46 @@ use DateTimeImmutable;
  * static::createWithDays(); if the end date would land on a non-business
  * day, the first business day after that date is returned.
  *
+ * A negative day count may be entered into the constructor to count in the
+ * opposite direction (days in the past vs. in the future). Or just use
+ * Rewinder.
+ *
  * @package iansltx\BusinessDays
  */
 class FastForwarder
 {
     use SkipWhenTrait;
 
+    protected $numDays = 0;
+
     /** @var DateInterval */
     protected $interval;
 
-    protected function __construct()
+    /**
+     * Static factory method for backward compatibility
+     *
+     * @param $num_days
+     * @param array $skip_when
+     * @return static
+     */
+    public static function createWithDays($num_days, array $skip_when = [])
     {
+        return new static($num_days, $skip_when);
+    }
+
+    /**
+     * Creates an instance with a defined number of business days
+     *
+     * @param int $num_days the number of business days from the supplied date to
+     *  the calculated date
+     * @param array $skip_when pre-defined filters to add to skipWhen without testing
+     */
+    public function __construct($num_days, array $skip_when = [])
+    {
+        $this->numDays = abs($num_days);
         $this->interval = new DateInterval('P1D');
+        $this->interval->invert = ($this->numDays != $num_days); // invert iterator direction if negative day count
+        $this->replaceSkipWhen($skip_when);
     }
 
     /**

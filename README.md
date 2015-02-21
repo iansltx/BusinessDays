@@ -59,7 +59,7 @@ use iansltx\BusinessDays\FilterFactory;
 use iansltx\BusinessDays\StaticFilter;
 
 // set up the instance with a day count
-$ff = iansltx\BusinessDays\FastForwarder::createWithDays(10);
+$ff = new iansltx\BusinessDays\FastForwarder(10);
 
 // add a closure-based filter
 $ff->skipWhen(function (\DateTimeInterface $dt) { //
@@ -89,6 +89,8 @@ echo $ff->exec(new \DateTimeImmutable('2015-02-12 09:00:00'))->format('Y-m-d H:i
 
 ```
 
+__NOTE:__ Fractional days are rounded up to the next whole day amount; e.g. 2.5 days will be treated as 3.
+
 ### Exporting/Importing Filter Sets
 
 The list of filters associated with a given calculator may be dumped as an array via `getSkipWhenFilters()`. This array
@@ -102,11 +104,13 @@ set from.
 2. Passing in a set of filters at construction time will not run argument and return type tests on filters contained
 therein.
 
-With that, let's copy our filters to a new Rewinder and calculate a few more dates.
+With that, let's copy our filters to a new Rewinder, which as its name suggests goes in the opposite direction, and
+calculate a few more dates.
 
 ``` php
 
-$rw = iansltx\BusinessDays\FastForwarder::createWithDays(2, $ff->getSkipWhenFilters());
+// you could also create a FastForwarder with a negative day count with the same effect
+$rw = new iansltx\BusinessDays\Rewinder(2, $ff->getSkipWhenFilters());
 
 echo $rw->exec(new \DateTime('2015-02-10 09:00:00'))->format('Y-m-d H:i:s'); // 2015-02-06 09:00:00
 echo $rw->exec(new \DateTime('2015-02-18 09:00:00'))->format('Y-m-d H:i:s'); // 2015-02-13 09:00:00

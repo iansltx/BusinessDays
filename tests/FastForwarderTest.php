@@ -77,6 +77,16 @@ class FastForwarderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\DateTime', $endDt);
     }
 
+    public function testNegativeDayCount()
+    {
+        $rw = $this->addFilterSet1(new FastForwarder(-2));
+
+        $endDt = $rw->exec(new Mutable('2015-02-18 09:00:00'));
+
+        $this->assertEquals('2015-02-13 09:00:00', $endDt->format('Y-m-d H:i:s'));
+        $this->assertInstanceOf('\DateTime', $endDt);
+    }
+
     public function testRewindOverBusinessDays()
     {
         $rw = $this->addFilterSet1(Rewinder::createWithDays(2));
@@ -84,6 +94,17 @@ class FastForwarderTest extends \PHPUnit_Framework_TestCase
         $endDt = $rw->exec(new Mutable('2015-02-19 09:00:00'));
 
         $this->assertEquals('2015-02-17 09:00:00', $endDt->format('Y-m-d H:i:s'));
+        $this->assertInstanceOf('\DateTime', $endDt);
+    }
+
+    public function testPartialDays()
+    {
+        $rw = $this->addFilterSet1(Rewinder::createWithDays(2.5));
+
+        $endDt = $rw->exec(new Mutable('2015-02-19 09:00:00'));
+
+        // rounds up to 3, so skips Presidents Day and weekend
+        $this->assertEquals('2015-02-13 09:00:00', $endDt->format('Y-m-d H:i:s'));
         $this->assertInstanceOf('\DateTime', $endDt);
     }
 
