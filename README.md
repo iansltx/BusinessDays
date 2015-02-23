@@ -7,7 +7,7 @@
 [![HHVM Status](https://img.shields.io/hhvm/iansltx/business-days.svg?style=flat-square)](http://hhvm.h4cc.de/package/iansltx/business-days)
 [![Coverage Status](https://img.shields.io/codeclimate/coverage/github/iansltx/BusinessDays.svg?style=flat-square)](https://scrutinizer-ci.com/g/iansltx/BusinessDays/code-structure)
 [![Quality Score](https://img.shields.io/scrutinizer/g/iansltx/BusinessDays.svg?style=flat-square)](https://scrutinizer-ci.com/g/iansltx/BusinessDays)
-[![Code Climate](https://codeclimate.com/github/iansltx/BusinessDays/badges/gpa.svg)](https://codeclimate.com/github/iansltx/BusinessDays)
+[![Code Climate](https://img.shields.io/codeclimate/github/iansltx/BusinessDays.svg?style=flat-square)](https://codeclimate.com/github/iansltx/BusinessDays)
 [![Total Downloads](https://img.shields.io/packagist/dt/iansltx/business-days.svg?style=flat-square)](https://packagist.org/packages/iansltx/business-days)
 
 BusinessDays is a set of tools for dealing with date calculations when certain (non-business/holiday) days don't count.
