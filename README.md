@@ -22,7 +22,8 @@ days in the future. Rewinder does the same thing, except working in the opposite
 The start date passed into the calculators can be a DateTime or DateTimeImmutable, or a subclass thereof. The value
 returned will be a clone of whatever was passed in, with its timestamp updated.
 
-This library should conform to PSRs 1, 2 and 4, and requires PHP 5.5 or newer.
+This library should conform to PSRs 1, 2 and 4, and requires PHP 5.5 or newer (5.6 recommended). 5.6 is the oldest
+version of the runtime that has automated tests running.
 
 ## Install
 
