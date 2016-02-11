@@ -19,25 +19,25 @@ class FilterTest extends \PHPUnit_Framework_TestCase
 
     public function testMonthDayNonInteger()
     {
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->expectException('\InvalidArgumentException');
         FilterFactory::monthAndDay(1, '1');
     }
 
     public function testMonthDayInvalidMonth()
     {
-        $this->setExpectedException('\OutOfBoundsException');
+        $this->expectException('\OutOfBoundsException');
         FilterFactory::monthAndDay(13, 1);
     }
 
     public function testMonthDayInvalidDay()
     {
-        $this->setExpectedException('\OutOfBoundsException');
+        $this->expectException('\OutOfBoundsException');
         FilterFactory::monthAndDay(12, 32);
     }
 
     public function testMonthDayInvalidDayForMonth()
     {
-        $this->setExpectedException('\OutOfBoundsException');
+        $this->expectException('\OutOfBoundsException');
         FilterFactory::monthAndDay(2, 30);
     }
 
@@ -55,31 +55,31 @@ class FilterTest extends \PHPUnit_Framework_TestCase
 
     public function testMonthDayDayOfWeekNonInteger()
     {
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->expectException('\InvalidArgumentException');
         FilterFactory::monthAndDayOnDayOfWeek(1, 1, '0');
     }
 
     public function testMonthDayDayOfWeekInvalidMonth()
     {
-        $this->setExpectedException('\OutOfBoundsException');
+        $this->expectException('\OutOfBoundsException');
         FilterFactory::monthAndDayOnDayOfWeek(13, 1, 0);
     }
 
     public function testMonthDayDayOfWeekInvalidDay()
     {
-        $this->setExpectedException('\OutOfBoundsException');
+        $this->expectException('\OutOfBoundsException');
         FilterFactory::monthAndDayOnDayOfWeek(12, 32, 0);
     }
 
     public function testMonthDayDayOfWeekInvalidDayForMonth()
     {
-        $this->setExpectedException('\OutOfBoundsException');
+        $this->expectException('\OutOfBoundsException');
         FilterFactory::monthAndDayOnDayOfWeek(2, 30, 0);
     }
 
     public function testMonthDayDayOfWeekInvalidDayOfWeek()
     {
-        $this->setExpectedException('\OutOfBoundsException');
+        $this->expectException('\OutOfBoundsException');
         FilterFactory::monthAndDayOnDayOfWeek(2, 28, 7);
     }
 
@@ -109,25 +109,25 @@ class FilterTest extends \PHPUnit_Framework_TestCase
 
     public function testNthDayOfWeekOfMonthNonInteger()
     {
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->expectException('\InvalidArgumentException');
         FilterFactory::nthDayOfWeekOfMonth(1, 0, '1');
     }
 
     public function testNthDayOfWeekOfMonthInvalidN()
     {
-        $this->setExpectedException('\OutOfBoundsException');
+        $this->expectException('\OutOfBoundsException');
         FilterFactory::nthDayOfWeekOfMonth(6, 0, 1);
     }
 
     public function testNthDayOfWeekOfMonthInvalidDayOfWeek()
     {
-        $this->setExpectedException('\OutOfBoundsException');
+        $this->expectException('\OutOfBoundsException');
         FilterFactory::nthDayOfWeekOfMonth(1, 7, 1);
     }
 
     public function testNthDayOfWeekOfMonthInvalidMonth()
     {
-        $this->setExpectedException('\OutOfBoundsException');
+        $this->expectException('\OutOfBoundsException');
         FilterFactory::nthDayOfWeekOfMonth(1, 1, 13);
     }
 
