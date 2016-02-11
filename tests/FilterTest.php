@@ -107,6 +107,18 @@ class FilterTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($isChristmas(new \DateTime('December 26 2014')));
     }
 
+    public function testMonthDayDayOfWeekSunday()
+    {
+        $isSundayFebruary7th = FilterFactory::monthAndDayOnDayOfWeek(2, 7, 0);
+        $this->assertTrue($isSundayFebruary7th(new \DateTime('February 7 2016')));
+    }
+
+    public function testMonthDayDayOfWeekSaturday()
+    {
+        $isSaturdayFebruary6th = FilterFactory::monthAndDayOnDayOfWeek(2, 6, 6);
+        $this->assertTrue($isSaturdayFebruary6th(new \DateTime('February 6 2016')));
+    }
+
     public function testNthDayOfWeekOfMonthNonInteger()
     {
         $this->expectException('\InvalidArgumentException');
