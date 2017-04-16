@@ -127,12 +127,11 @@ can be seen in more complex filters like isEasterMonday.
 ## Testing
 
 ``` bash
-$ composer test
+$ phpunit
 ```
 
 `humbug.json` is included if you want to do mutation testing with [Humbug](https://github.com/padraic/humbug).
-Currently, not all mutations are caught; PRs are welcome to help rectify this issue. `composer test` only runs PHPUnit
-tests.
+Currently, not all mutations are caught; PRs are welcome to help rectify this issue.
 
 ## Contributing
 
